@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
       pickedImage = await picker.pickImage(
           source: inputSource == 'camera' ? ImageSource.camera : ImageSource.gallery,
           maxWidth: 1920);
+
       final String fileName = path.basename(pickedImage!.path);
       File imageFile = File(pickedImage.path);
 
@@ -60,7 +61,6 @@ class _HomePageState extends State<HomePage> {
                   'uploaded_by': 'A bad guy',
                   'description': 'Some description...'
                 }));
-
         // Refresh the UI
         setState(() {});
 
@@ -79,6 +79,7 @@ class _HomePageState extends State<HomePage> {
   // Retriew the uploaded images
   // This function is called when the app launches for the first time or when an image is uploaded or deleted
   Future<List<Map<String, dynamic>>> _loadImages() async {
+
     List<Map<String, dynamic>> files = [];
 
     final ListResult result = await storage.ref().list();
@@ -133,8 +134,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: FutureBuilder(
                 future: _loadImages(),
-                builder: (context,
-                    AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                builder: (context,  AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return ListView.builder(
                       itemCount: snapshot.data?.length ?? 0,
